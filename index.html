@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Multiplication</title>
+  <meta name="viewport" content="width=device-width">
+  <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+  <main role="main">
+    <header>
+      <a href="" class="brand">Multiplication</a>
+    </header>
+    <div class="card-container">
+      <div class="card">
+        <div class="card-front">
+          <ol class="problem">
+            <li class="multiplier"></li>
+            <li class="multiplicand"></li>
+          </ol>
+          <form class="user-answer-form">
+            <input type="number" class="user-answer">
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+        <div class="card-back">
+          <span class="card-answer"></span>
+          <span class="card-response"></span>
+          <button class="answer-action">Button</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script>
+    (function(){
+      var button = document.querySelector('.flip-card');
+      var card = document.querySelector('.card');
+      var card_back = document.querySelector('.card-back');
+      var card_multiplier = document.querySelector('.multiplier');
+      var card_multiplicand = document.querySelector('.multiplicand');
+      var card_answer = document.querySelector('.card-answer');
+      var card_response = document.querySelector('.card-response');
+      var user_answer_form = document.querySelector('.user-answer-form');
+
+      function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+      }
+
+      var create_problem = function(){
+        var multiplier = getRandomInt(0, 12);
+        var multiplicand = getRandomInt(0, 12);
+        var answer = multiplier * multiplicand;
+
+        card.dataset.answer_state = '';
+        user_answer_form.reset();
+
+        card_multiplier.innerText = multiplier;
+        card_multiplicand.innerText = multiplicand;
+        card_answer.innerText = answer;
+      }
+
+      var submit_answer = function(){
+        var user_input = document.querySelector('.user-answer');
+        var result, answer_state;
+        if (user_input.value == card_answer.innerText){
+          result = "You got it. Good job!";
+          answer_state = 'correct';
+        }
+        else{
+          result = "Whoops, let's try again!";
+          answer_state = 'incorrect';
+        }
+        card_response.innerText = '';
+        card_response.innerText = result;
+        card.classList.add('flipped');
+        card.dataset.answer_state = answer_state;
+
+        update_action();
+      }
+
+      var update_action = function(){
+        var answer_action = document.querySelector('.answer-action');
+        answer_action.innerText = '';
+
+        if (card.dataset.answer_state == 'correct'){
+          answer_action.innerText = 'Next problem';
+        }
+        else{
+          answer_action.innerText = 'Try again';
+        }
+
+        answer_action.addEventListener('click', function(){
+          if ((card.dataset.answer_state == 'correct')){
+            create_problem();
+          }
+
+          card.classList.remove('flipped');
+        })
+      }
+
+      var init = function(){
+        create_problem();
+
+        user_answer_form.addEventListener('submit', function(e){
+          e.preventDefault();
+          card.classList.toggle('flipped');
+          submit_answer();
+        });
+      }
+
+      init();
+
+
+    })();
+  </script>
+</body>
+</html>

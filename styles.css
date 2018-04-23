@@ -1,0 +1,147 @@
+*, *:before, *:after{
+  box-sizing: border-box;
+}
+
+html, body{
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  background-color: #3A606E;
+  font-family: 'Black Han Sans', sans-serif;
+}
+
+button{
+  display: block;
+  width: auto;
+  margin-top: .5rem;
+  padding: .5rem 1.5rem;
+  background-color: #607B7D;
+  font-family: inherit;
+  font-size: 1rem;
+  text-transform: uppercase;
+  color: #fff;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+header{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3.5rem;
+  background-color: #E0E0E0;
+  text-align: center;
+}
+
+header a{
+  display: block;
+  position: relative;
+  bottom: -1.75rem;
+  color: #3A606E;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-decoration: none;
+}
+
+main{
+  height: 100%;
+  padding: 2rem;
+}
+
+.card-container{
+  position: relative;
+  width: 90%;
+  height: 70%;
+  margin: 5rem auto 0;
+  border: 1px dotted #3A606E;
+  perspective: 800px;
+}
+
+@media screen and (min-width: 40rem){
+  .card-container{
+    width: 300px;
+    height: 400px;
+  }
+}
+
+.card{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+}
+
+.card > div {
+  margin: 0;
+  padding: 2rem;
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  backface-visibility: hidden;
+}
+
+.card-front {
+
+}
+
+.card-back {
+  transform: rotateY( 180deg );
+}
+
+.card.flipped {
+  transform: rotateY( 180deg );
+}
+
+.problem{
+  width: 10rem;
+  list-style: none;
+  margin: 0 auto;
+  padding: 1rem 0 .5rem;
+  border-bottom: 2px solid #000;
+  text-align: right;
+}
+
+.problem li{
+  font-size: 4rem;
+  line-height: 1.1;
+}
+
+.multiplicand:before{
+  display: block;
+  float: left;
+  content: "\00d7";
+}
+
+.user-answer-form{
+  width: 9rem;
+  margin: 1rem auto;
+}
+
+.user-answer-form button[type=submit]{
+  width: 100%;
+}
+
+.user-answer{
+  width: 100%;
+  padding: .5rem .25rem;
+  border: 0;
+  background-color: #E0E0E0;
+  font-size: 3rem;
+  font-family: inherit;
+  text-align: right;
+}
+
+.card-answer{
+  display: none;
+}
+
+.card-response{
+  display: block;
+  padding: 2rem 0;
+  font-size: 2.5rem;
+}
