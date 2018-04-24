@@ -51,8 +51,8 @@ main{
 .card-container{
   position: relative;
   width: 90%;
-  height: 90%;
-  margin: 5rem auto 0;
+  height: 80%;
+  margin: 4rem auto 0;
   border: 1px dotted #3A606E;
   perspective: 800px;
 }
