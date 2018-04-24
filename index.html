@@ -21,7 +21,7 @@
           </ol>
           <form class="user-answer-form">
             <input type="number" class="user-answer">
-            <button type="submit">Submit</button>
+            <button type="submit" name="submit">Submit</button>
           </form>
         </div>
         <div class="card-back">
@@ -42,6 +42,7 @@
       var card_answer = document.querySelector('.card-answer');
       var card_response = document.querySelector('.card-response');
       var user_answer_form = document.querySelector('.user-answer-form');
+      var user_answer = document.querySelector('.user-answer');
 
       function getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -60,6 +61,8 @@
         card_multiplier.innerText = multiplier;
         card_multiplicand.innerText = multiplicand;
         card_answer.innerText = answer;
+
+        user_answer.focus();
       }
 
       var submit_answer = function(){
