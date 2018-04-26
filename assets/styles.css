@@ -14,6 +14,7 @@ button{
   display: inline-block;
   width: auto;
   padding: .5rem 1.5rem;
+  border: 0;
   background-color: #607B7D;
   font-family: inherit;
   font-size: 1rem;
@@ -43,6 +44,12 @@ header a{
   text-decoration: none;
 }
 
+.hidden{
+  display: none;
+  height: 0;
+  min-height: 0;
+}
+
 .app-controls{
   float: right;
 }
@@ -62,10 +69,39 @@ main{
   padding: 2rem;
 }
 
+.start-container{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #3a606e;
+  z-index: 1000;
+}
+
+.start-container-inner{
+  max-width: 60%;
+  margin: auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.start-container h1{
+  font-size: 4.5rem;
+  color: #fff;
+  letter-spacing: 2px;
+}
+
+.start-container button{
+  padding: 1rem 3rem;
+  background-color: transparent;
+  border: 4px solid #fff;
+}
+
 .card-container{
   position: relative;
   width: 90%;
-  height: 80%;
+  height: 70%;
   margin: 6rem auto 0;
   border: 1px dotted #3A606E;
   perspective: 800px;
@@ -76,6 +112,25 @@ main{
     width: 300px;
     height: 400px;
   }
+}
+
+.random-switch-control{
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+.random-switch-control span[type=checkbox]{
+  display: inline-block;
+}
+
+.in-order-label{
+  display: inline-block;
+  padding: .5rem .5rem 0 0;
+}
+
+.random-label{
+  display: inline-block;
+  padding: .5rem 0 0 .5rem;
 }
 
 .card{
@@ -95,17 +150,12 @@ main{
 .card > div {
   margin: 0;
   padding: 2rem;
-  display: block;
   position: absolute;
   width: 100%;
   height: 100%;
   background-color: white;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-}
-
-.card-front {
-
 }
 
 .card-back {
@@ -121,13 +171,23 @@ main{
   list-style: none;
   margin: 0 auto;
   padding: 1rem 0 .5rem;
-  border-bottom: 2px solid #000;
   text-align: right;
 }
 
+@media screen and (min-height: 30rem){
+  .problem{ border-bottom: 2px solid #000;}
+}
+
 .problem li{
+  display: inline-block;
   font-size: 4rem;
   line-height: 1.1;
+}
+
+@media screen and (min-height: 30rem){
+  .problem li{
+    display: block;
+  }
 }
 
 .multiplicand:before{
@@ -182,11 +242,6 @@ main{
   padding: 2rem;
 }
 
-.results-container.hidden{
-  height: 0;
-  min-height: 0;
-}
-
 .answered-problems, .unanswered-problems{
   list-style: none;
   display: flex;
@@ -196,10 +251,16 @@ main{
 }
 
 .results-container li{
-  width: 10%;
+  width: auto;
   margin: .25rem;
   padding: .5rem .25rem;
   text-align: center;
+}
+
+@media screen and (min-width: 60rem){
+  .results-container li{
+    width: 10%;
+  }
 }
 
 .answered{

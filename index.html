@@ -5,17 +5,29 @@
   <title>Multiplication</title>
   <meta name="viewport" content="width=device-width">
   <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans" rel="stylesheet">
-  <link href="styles.css" rel="stylesheet">
+  <link href="assets/styles.css" rel="stylesheet">
 </head>
 <body>
   <main role="main">
     <header>
       <a href="" class="brand">Multiplication</a>
       <div class="app-controls">
+        <span class="timer"></span>
         <span class="problem-count"></span>
         <button class="view-results">Results</button>
       </div>
     </header>
+    <div class="start-container">
+      <div class="start-container-inner">
+        <h1>Let's start your test!</h1>
+        <div class="random-switch-control">
+          <span class="in-order-label">In Order</span>
+          <input type="checkbox" class="random-switch" />
+          <span class="random-label">Random</span>
+        </div>
+        <button class="start-app">Start Now</button>
+      </div>
+    </div>
     <div class="card-container">
       <div class="card">
         <div class="card-front">
@@ -39,7 +51,7 @@
       <div class="results-container-inner">
         <h2>Completed</h2>
         <ul class="answered-problems"></ul>
-        <h2>No completed</h2>
+        <h2>Not completed</h2>
         <ul class="unanswered-problems"></ul>
       </div>
     </div>
@@ -57,22 +69,37 @@
       var card_response = document.querySelector('.card-response');
       var user_answer_form = document.querySelector('.user-answer-form');
       var user_answer = document.querySelector('.user-answer');
+      var timer = document.querySelector('.timer');
 
       var problems = [[1,1],[1,2],[1,3],[1,4],[1,5],[1,6],[1,7],[1,8],[1,9],[1,10],[1,11],[1,12],[2,1],[2,2],[2,3],[2,4],[2,5],[2,6],[2,7],[2,8],[2,9],[2,10],[2,11],[2,12],[3,1],[3,2],[3,3],[3,4],[3,5],[3,6],[3,7],[3,8],[3,9],[3,10],[3,11],[3,12],[4,1],[4,2],[4,3],[4,4],[4,5],[4,6],[4,7],[4,8],[4,9],[4,10],[4,11],[4,12],[5,1],[5,2],[5,3],[5,4],[5,5],[5,6],[5,7],[5,8],[5,9],[5,10],[5,11],[5,12],[6,1],[6,2],[6,3],[6,4],[6,5],[6,6],[6,7],[6,8],[6,9],[6,10],[6,11],[6,12],[7,1],[7,2],[7,3],[7,4],[7,5],[7,6],[7,7],[7,8],[7,9],[7,10],[7,11],[7,12],[8,1],[8,2],[8,3],[8,4],[8,5],[8,6],[8,7],[8,8],[8,9],[8,10],[8,11],[8,12],[9,1],[9,2],[9,3],[9,4],[9,5],[9,6],[9,7],[9,8],[9,9],[9,10],[9,11],[9,12],[10,1],[10,2],[10,3],[10,4],[10,5],[10,6],[10,7],[10,8],[10,9],[10,10],[10,11],[10,12],[11,1],[11,2],[11,3],[11,4],[11,5],[11,6],[11,7],[11,8],[11,9],[11,10],[11,11],[11,12],[12,1],[12,2],[12,3],[12,4],[12,5],[12,6],[12,7],[12,8],[12,9],[12,10],[12,11],[12,12]];
       var answered_problems = [];
-      var problem_num;
+      var problem_num = -1;
+      var random_order;
 
       var problem_count = 0;
       var problem_count_label = document.querySelector('.problem-count');
+
+      var random_switch_el = document.querySelector('.random-switch');
+      var randomSwitch = new Switch(random_switch_el, {checked: true});
 
       function getRandomInt(max){
         return Math.floor(Math.random() * Math.floor(max));
       };
 
+      var set_problem_count = function(num){
+        problem_count_label.innerText = num + ' problems';
+      };
+
       var create_problem = function(){
         var multiplier, multiplicand, answer;
 
-        problem_num = getRandomInt(problems.length+1);
+        if (random_order == true){
+          problem_num = getRandomInt(problems.length+1);
+          console.log(problem_num)
+        }
+        else{
+          problem_num += 1
+        }
 
         multiplier = problems[problem_num][0];
         multiplicand = problems[problem_num][1];
@@ -116,11 +143,16 @@
         if (card.dataset.answer_state == 'correct'){
           answer_action.innerText = 'Next problem';
 
+          console.log(problems)
+          console.log(problem_num)
+
           answered_problems.push(problems[problem_num]);
-          problems.pop(problem_num);
+          problems.splice(problem_num, 1);
+
+          console.log(problems)
 
           problem_count += 1;
-          problem_count_label.innerText = problem_count + ' of 144 problems';
+          set_problem_count(problem_count);
         }
         else{
           answer_action.innerText = 'Try again';
@@ -149,6 +181,8 @@
           answered.appendChild(li);
         }
 
+        console.log(problems.length)
+
         for (i = 0; i < problems.length; i++){
           var li = document.createElement('li');
           li.classList.add('unanswered');
@@ -157,13 +191,43 @@
         }
       }
 
+      var start_timer = function(){
+        var start = new Date().getTime(),
+        elapsed = '0.0';
+
+        window.setInterval(function(){
+            var time = new Date().getTime() - start;
+
+            elapsed = Math.floor(time / 100) / 10;
+            if(Math.round(elapsed) == elapsed) { elapsed += '.0'; }
+
+            timer.innerText = elapsed;
+            timer.dataset.timer = elapsed;
+
+        }, 1000);
+      };
+
+      var start_app = function(){
+        var start_container = document.querySelector('.start-container');
+        start_container.classList.add('hidden');
+
+        random_order = randomSwitch.getChecked();
+
+        set_problem_count(problem_count);
+        create_problem();
+        //start_timer();
+
+      };
+
       var init = function(){
         var view_results = document.querySelector('.view-results');
         var results_container = document.querySelector('.results-container');
+        var start_button = document.querySelector('.start-app');
 
-        create_problem();
+        start_button.addEventListener('click', function(){
+          start_app();
+        });
 
-        problem_count_label.innerText = problem_count + ' of 144 problems';
 
         user_answer_form.addEventListener('submit', function(e){
           e.preventDefault();
