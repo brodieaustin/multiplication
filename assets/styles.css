@@ -13,11 +13,12 @@ html, body{
 button{
   display: inline-block;
   width: auto;
-  padding: .5rem 1.5rem;
+  padding: .875rem 1.5rem;
   border: 0;
   background-color: #607B7D;
   font-family: inherit;
   font-size: 1rem;
+  line-height: 1;
   text-transform: uppercase;
   color: #fff;
   letter-spacing: 2px;
@@ -34,7 +35,7 @@ header{
   overflow: hidden;
 }
 
-header a{
+.brand{
   display: block;
   float: left;
   color: #3A606E;
@@ -56,6 +57,7 @@ header a{
 
 .app-controls *{
   display: inline-block;
+  margin-top: .25rem;
   margin-left: .5rem;
 }
 
@@ -80,16 +82,36 @@ main{
 }
 
 .start-container-inner{
-  max-width: 60%;
+  max-width: 90%;
   margin: auto;
   padding: 2rem;
   text-align: center;
 }
 
+@media screen and (min-width: 40rem){
+  .start-container-inner{
+    max-width: 70%;
+  }
+}
+
+@media screen and (min-width: 50rem){
+  .start-container-inner{
+    max-width: 60%;
+  }
+}
+
 .start-container h1{
-  font-size: 4.5rem;
+  font-size: 3rem;
   color: #fff;
   letter-spacing: 2px;
+}
+
+@media screen and (min-width: 40rem){
+  .start-container h1{
+    font-size: 4.5rem;
+    color: #fff;
+    letter-spacing: 2px;
+  }
 }
 
 .start-container button{
