@@ -141,7 +141,7 @@
         var result, answer_state;
 
         if (user_input.value == card_answer.innerText){
-          if (problem_count == answered_problems.length){
+          if (problems.length == 0){
             stop_timer();
             result = "You're done!";
             answer_state = '';
