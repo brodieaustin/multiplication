@@ -72,7 +72,7 @@
       var user_answer = document.querySelector('.user-answer');
       var timer = document.querySelector('.timer');
 
-      var problems, answered_problems, random_order, problem_num;
+      var problems, answered_problems, random_order, problem_num, timer_interveral;
 
       var problem_count = 0;
       var problem_count_label = document.querySelector('.problem-count');
@@ -117,13 +117,10 @@
 
         if (random_order == true){
           problem_num = getRandomInt(problems.length+1);
-          console.log(problem_num)
         }
         else{
           problem_num -= 1
         }
-
-        console.log(problem_num)
 
         multiplier = problems[problem_num][0];
         multiplicand = problems[problem_num][1];
@@ -144,8 +141,15 @@
         var result, answer_state;
 
         if (user_input.value == card_answer.innerText){
-          result = "You got it. Good job!";
-          answer_state = 'correct';
+          if (problem_count == answered_problems.length){
+            stop_timer();
+            result = "You're done!";
+            answer_state = '';
+          }
+          else{
+            result = "You got it. Good job!";
+            answer_state = 'correct';
+          }
 
         }
         else{
@@ -203,8 +207,6 @@
           answered.appendChild(li);
         }
 
-        console.log(problems.length)
-
         for (i = 0; i < problems.length; i++){
           var li = document.createElement('li');
           li.classList.add('unanswered');
@@ -215,18 +217,22 @@
 
       var start_timer = function(){
         var start = new Date().getTime(),
-        elapsed = '0.0';
+        elapsed = '0';
 
-        window.setInterval(function(){
+        timer_interveral = setInterval(function(){
             var time = new Date().getTime() - start;
 
             elapsed = Math.floor(time / 100) / 10;
-            if(Math.round(elapsed) == elapsed) { elapsed += '.0'; }
+            if(Math.round(elapsed) == elapsed) { elapsed ; }
 
             timer.innerText = elapsed;
             timer.dataset.timer = elapsed;
 
         }, 1000);
+      };
+
+      var stop_timer = function(){
+        cancelInterval(timer_interveral);
       };
 
       var start_app = function(){
@@ -238,7 +244,7 @@
         set_problem_count(problem_count);
         setup_problems();
         create_problem();
-        //start_timer();
+        start_timer();
 
       };
 
